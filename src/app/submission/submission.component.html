@@ -1,0 +1,61 @@
+<div class="container mt-4">
+
+  <h2 class="mb-3">Submissions</h2>
+
+  <!-- Add Submission Button -->
+  <button 
+    class="btn btn-primary mb-3"
+    (click)="openCreateModal()">
+    + New Submission
+  </button>
+
+  <!-- Table -->
+  <table class="table table-bordered table-hover">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th>
+        <th>Submission Name</th>
+        <th>Status</th>
+        <th>Created On</th>
+        <th style="width: 100px">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let item of submissions">
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.status }}</td>
+        <td>{{ item.createdOn | date }}</td>
+
+        <td>
+          <button class="btn btn-sm btn-outline-secondary">Edit</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- CREATE SUBMISSION MODAL -->
+<div 
+  class="modal fade" 
+  id="createSubmissionModal" 
+  tabindex="-1"
+  aria-hidden="true">
+
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Create Submission</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <app-create-submission></app-create-submission>
+      </div>
+
+    </div>
+  </div>
+</div>

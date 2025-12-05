@@ -1,3 +1,5 @@
+/// <reference types="@angular/localize" />
+
 import 'zone.js';
 import { environment } from './environments/environment';
 import { ENVIRONMENT } from './app/config/environment.token';

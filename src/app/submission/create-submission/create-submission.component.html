@@ -1,0 +1,119 @@
+<form [formGroup]="form">
+
+  <!-- Candidate -->
+  <div class="mb-3">
+    <label class="form-label">Candidate</label>
+
+    <input
+      #candidateInput
+      type="text"
+      class="form-control"
+      [ngbTypeahead]="searchCandidates"
+      [inputFormatter]="formatter"
+      [resultFormatter]="formatter"
+      (selectItem)="onCandidateSelect($event)"
+      (blur)="validateCandidateInput($event)"
+      (keydown.enter)="focusNext(recruiterInput)"
+      placeholder="Type candidate name..." />
+
+    <div class="text-danger mt-1" *ngIf="candidateInvalid">
+      Please select a valid candidate from the list.
+    </div>
+  </div>
+
+
+  <!-- Recruiter -->
+  <div class="mb-3">
+    <label class="form-label">Recruiter</label>
+
+    <input
+      #recruiterInput
+      type="text"
+      class="form-control"
+      [ngbTypeahead]="searchRecruiters"
+      [inputFormatter]="formatter"
+      [resultFormatter]="formatter"
+      (selectItem)="onRecruiterSelect($event)"
+      (blur)="validateRecruiterInput($event)"
+      (keydown.enter)="focusNext(submissionNameInput)"
+      placeholder="Type recruiter name..." />
+
+    <div class="text-danger mt-1" *ngIf="recruiterInvalid">
+      Please select a valid recruiter from the list.
+    </div>
+  </div>
+
+
+  <!-- Submission Name -->
+  <div class="mb-3">
+    <label class="form-label">Submission Name</label>
+    <input
+      #submissionNameInput
+      class="form-control"
+      formControlName="submissionName"
+      (keydown.enter)="focusNext(statusSelect)" />
+  </div>
+
+
+  <!-- Status -->
+  <div class="mb-3">
+    <label class="form-label">Status</label>
+    <select
+      #statusSelect
+      class="form-select"
+      formControlName="status"
+      (keydown.enter)="focusNext(clientInput)">
+
+      <option>Submitted</option>
+      <option>Client Review</option>
+      <option>Interview Scheduled</option>
+      <option>Rejected</option>
+      <option>Offered</option>
+      <option>Hired</option>
+    </select>
+  </div>
+
+
+  <!-- Client -->
+  <div class="mb-3">
+    <label class="form-label">Client</label>
+    <input
+      #clientInput
+      class="form-control"
+      formControlName="client"
+      (keydown.enter)="focusNext(rateInput)" />
+  </div>
+
+
+  <!-- Rate -->
+  <div class="mb-3">
+    <label class="form-label">Rate</label>
+    <input
+      #rateInput
+      class="form-control"
+      formControlName="rate"
+      (keydown.enter)="focusNext(locationInput)" />
+  </div>
+
+
+  <!-- Location -->
+  <div class="mb-3">
+    <label class="form-label">Location</label>
+    <input
+      #locationInput
+      class="form-control"
+      formControlName="location"
+      (keydown.enter)="submit()" />
+  </div>
+
+
+</form>
+
+<div class="d-flex justify-content-end mt-3">
+  <button
+    class="btn btn-primary"
+    [disabled]="candidateInvalid || recruiterInvalid || form.invalid"
+    (click)="submit()">
+    Create
+  </button>
+</div>

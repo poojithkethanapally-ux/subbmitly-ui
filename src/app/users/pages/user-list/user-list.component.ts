@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../../../services/user.service';
-import { PrimarybuttonComponent } from '../../../../shared/primarybutton/primarybutton.component';
+import { UserService } from '../../../services/user.service';
+import { PrimarybuttonComponent } from '../../../shared/primarybutton/primarybutton.component';
 import { UserCreateComponent } from '../../user-create/user-create.component';
 import { MatDialog } from '@angular/material/dialog';
 declare var bootstrap: any;

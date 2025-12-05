@@ -1,9 +1,9 @@
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../modules/users/models/user.model';
+import { User } from '../users/models/user.model';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { CreateUserRequest } from '../modules/users/models/CreateUserModel';
+import { CreateUserRequest } from '../users/models/CreateUserModel';
 
 @Injectable({
   providedIn: 'root'

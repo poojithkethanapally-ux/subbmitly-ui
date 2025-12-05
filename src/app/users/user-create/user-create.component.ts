@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserService } from '../../../services/user.service';
-import { PrimarybuttonComponent } from '../../../shared/primarybutton/primarybutton.component';  
+import { UserService } from '../../services/user.service';
+import { PrimarybuttonComponent } from '../../shared/primarybutton/primarybutton.component';  
 import { CreateUserRequest } from '../models/CreateUserModel';
 
 declare var bootstrap: any;
@@ -21,7 +21,7 @@ export class UserCreateComponent {
 
   form = new FormGroup({
     name: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     role: new FormControl('', Validators.required)
   });
 
