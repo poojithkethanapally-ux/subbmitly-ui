@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+.custom-dialog .mat-mdc-dialog-container {
+  padding: 0 !important;
+  border-radius: 16px !important;
+}
+
+.custom-dialog .mdc-dialog__surface {
+  border-radius: 16px !important;
+  overflow: hidden !important;
+}
+
+.custom-dialog .mat-mdc-dialog-content {
+  padding: 0 !important;
+}
+/* html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */

@@ -1,0 +1,16 @@
+.modal-content {
+  border-radius: 18px !important;
+  background: #ffffff;
+}
+
+.modal-header {
+  padding: 1.5rem 2rem;
+}
+
+.modal-body {
+  padding: 0 2rem 1.5rem 2rem;
+}
+
+.modal-footer {
+  padding: 1rem 2rem;
+}

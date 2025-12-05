@@ -1,0 +1,10 @@
+<button
+  class="btn"
+  [ngClass]="['btn-' + variant, size]"
+  [disabled]="disabled || loading"
+  (click)="onClick()">
+
+  <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+
+  {{ label }}
+</button>

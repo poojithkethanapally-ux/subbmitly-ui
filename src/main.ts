@@ -1,6 +1,20 @@
+import 'zone.js';
+import { environment } from './environments/environment';
+import { ENVIRONMENT } from './app/config/environment.token';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { App } from './app/app';
+import { AppComponent } from './app/app';
+import { provideRouter } from '@angular/router';
+import { routes } from './app/app.routes';
+import { provideHttpClient } from '@angular/common/http';
+import * as bootstrap from "bootstrap";
 
-bootstrapApplication(App, appConfig)
-  .catch((err) => console.error(err));
+(window as any).bootstrap = bootstrap;
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(routes),
+     provideHttpClient(),
+         { provide: ENVIRONMENT, useValue: environment }
+    // other providers
+  ],
+});

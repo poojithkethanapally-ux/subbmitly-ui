@@ -1,0 +1,43 @@
+<div class="user-list">
+  <h2>Users</h2>
+
+  <div *ngIf="loading">Loading users…</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+   <app-primarybutton
+  label="Add User"
+  variant="primary"
+  (clicked)="openCreateUser()">
+</app-primarybutton>
+
+<!-- BOOTSTRAP MODAL STRUCTURE -->
+<div class="modal fade" id="createUserModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4 shadow">
+      <app-user-create></app-user-create>
+    </div>
+  </div>
+</div>
+
+
+  <table *ngIf="!loading && !error" class="user-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Active</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of users">
+        <td>{{ u.userId }}</td>
+        <td>{{ u.fullName }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ u.role }}</td>
+        <td>{{ u.isActive ? 'Yes' : 'No' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
