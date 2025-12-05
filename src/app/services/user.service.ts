@@ -2,7 +2,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../modules/users/models/user.model';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { CreateUserRequest } from '../modules/users/models/CreateUserModel';
 
 @Injectable({
@@ -11,6 +11,7 @@ import { CreateUserRequest } from '../modules/users/models/CreateUserModel';
 export class UserService {
 
   private baseUrl = environment.apiUrl;
+  private refreshUsers$ = new BehaviorSubject<void>(undefined);
 
   constructor(private http: HttpClient) {}
 
@@ -18,6 +19,13 @@ export class UserService {
     return this.http.get<User[]>(`${this.baseUrl}/userProfile/getUserInfo`);
   }
 
+  refreshUsers(): void {
+    this.refreshUsers$.next();
+  }
+
+  onUserCreated$(): Observable<void> {
+    return this.refreshUsers$.asObservable();
+  }
 
   createUser(payload: CreateUserRequest): Observable<any> {
     console.log(payload);

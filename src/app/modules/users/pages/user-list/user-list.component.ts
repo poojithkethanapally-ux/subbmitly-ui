@@ -23,8 +23,12 @@ export class UserListComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit(): void {
-  this.loadUsers();    // comment out real API call
+  this.loadUsers();
   this.loading = false;
+  
+  this.userService.onUserCreated$().subscribe(() => {
+    this.loadUsers();
+  });
   }
 
   loadUsers(): void {

@@ -47,7 +47,9 @@ export class UserCreateComponent {
     this.userService.createUser(payload).subscribe({
       next: () => {
         this.loading = false;
+        this.userService.refreshUsers();
         this.closeModal();
+        this.form.reset();
       },
       error: () => {
         this.loading = false;
