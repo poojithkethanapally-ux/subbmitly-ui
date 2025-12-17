@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import * as bootstrap from 'bootstrap';
 import { CommonModule } from '@angular/common';
 import { CreateSubmissionComponent } from "./create-submission/create-submission.component";
+import { SubmissionResponse } from './models/SubmissionResponse';
+import { SubmissionService } from '../services/submissions.service';
 
 @Component({
   selector: 'app-submission',
@@ -11,22 +13,50 @@ import { CreateSubmissionComponent } from "./create-submission/create-submission
   styleUrls: ['./submission.component.css']
 })
 export class SubmissionComponent implements OnInit {
+  submissions: SubmissionResponse[] = [];
+  loading = true;
+  error: string | null = null;
+  modal: bootstrap.Modal | null = null;
 
-  submissions = [
-    { id: 1, name: 'Test 1', status: 'Pending', createdOn: new Date() },
-    { id: 2, name: 'Test 2', status: 'Completed', createdOn: new Date() }
-  ];
+  constructor(
+    private submissionService: SubmissionService
+  ) {}
 
-  constructor() {}
+  ngOnInit(): void {
+    this.loadSubmissions();
+      this.submissionService.onSubmissionCreated().subscribe(() => {
+    this.loadSubmissions();
+  });
+  }
 
-  ngOnInit(): void {}
+  loadSubmissions(): void {
+    this.loading = true;
+    this.error = null;
+    this.submissionService.getSubmissions().subscribe({
+      next: (data) => {
+        console.log("Submissions:", data);
+        this.submissions = data;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error fetching submissions:', err);
+        this.error = 'Failed to load submissions';
+        this.loading = false;
+      }
+    });
+  }
 
   openCreateModal() {
     const modalElement = document.getElementById('createSubmissionModal');
     if (modalElement) {
-      const modal = new bootstrap.Modal(modalElement);
-      modal.show();
+      this.modal = new bootstrap.Modal(modalElement);
+      this.modal.show();
     }
   }
 
+  closeCreateModal() {
+    if (this.modal) {
+      this.modal.hide();
+    }
+  }
 }

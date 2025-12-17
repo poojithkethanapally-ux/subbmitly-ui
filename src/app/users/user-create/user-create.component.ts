@@ -34,9 +34,7 @@ export class UserCreateComponent {
   ) {}
 
   save() {
-      console.log("save is hittting");
     if (this.form.invalid) return;
-     console.log("save is afetr");
     this.loading = true;
     const payload: CreateUserRequest = {
     fullName: this.form.value.name!,

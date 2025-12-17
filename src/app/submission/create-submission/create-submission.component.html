@@ -3,7 +3,6 @@
   <!-- Candidate -->
   <div class="mb-3">
     <label class="form-label">Candidate</label>
-
     <input
       #candidateInput
       type="text"
@@ -15,17 +14,14 @@
       (blur)="validateCandidateInput($event)"
       (keydown.enter)="focusNext(recruiterInput)"
       placeholder="Type candidate name..." />
-
     <div class="text-danger mt-1" *ngIf="candidateInvalid">
       Please select a valid candidate from the list.
     </div>
   </div>
 
-
   <!-- Recruiter -->
   <div class="mb-3">
     <label class="form-label">Recruiter</label>
-
     <input
       #recruiterInput
       type="text"
@@ -35,25 +31,12 @@
       [resultFormatter]="formatter"
       (selectItem)="onRecruiterSelect($event)"
       (blur)="validateRecruiterInput($event)"
-      (keydown.enter)="focusNext(submissionNameInput)"
+      (keydown.enter)="focusNext(statusSelect)"
       placeholder="Type recruiter name..." />
-
     <div class="text-danger mt-1" *ngIf="recruiterInvalid">
       Please select a valid recruiter from the list.
     </div>
   </div>
-
-
-  <!-- Submission Name -->
-  <div class="mb-3">
-    <label class="form-label">Submission Name</label>
-    <input
-      #submissionNameInput
-      class="form-control"
-      formControlName="submissionName"
-      (keydown.enter)="focusNext(statusSelect)" />
-  </div>
-
 
   <!-- Status -->
   <div class="mb-3">
@@ -62,17 +45,26 @@
       #statusSelect
       class="form-select"
       formControlName="status"
-      (keydown.enter)="focusNext(clientInput)">
-
-      <option>Submitted</option>
-      <option>Client Review</option>
-      <option>Interview Scheduled</option>
-      <option>Rejected</option>
-      <option>Offered</option>
-      <option>Hired</option>
+      (keydown.enter)="focusNext(submissionDateInput)">
+        <option>Submitted</option>
+        <option>Client Review</option>
+        <option>Interview Scheduled</option>
+        <option>Rejected</option>
+        <option>Offered</option>
+        <option>Hired</option>
     </select>
   </div>
 
+  <!-- Submission Date -->
+    <div class="mb-3">
+    <label class="form-label">Submission Date</label>
+    <input
+        #submissionDateInput
+        type="date"
+        class="form-control"
+        formControlName="submissionDate"
+        (keydown.enter)="focusNext(clientInput)" />
+    </div>
 
   <!-- Client -->
   <div class="mb-3">
@@ -81,9 +73,93 @@
       #clientInput
       class="form-control"
       formControlName="client"
-      (keydown.enter)="focusNext(rateInput)" />
+      (keydown.enter)="focusNext(vendorInput)" />
   </div>
 
+  <!-- Vendor -->
+  <div class="mb-3">
+    <label class="form-label">Vendor Name</label>
+    <input
+      #vendorInput
+      class="form-control"
+      formControlName="vendorName"
+      (keydown.enter)="focusNext(vendorContactNameInput)" />
+  </div>
+
+  <!-- Vendor Contact Name -->
+  <div class="mb-3">
+    <label class="form-label">Vendor Contact Name</label>
+    <input
+      #vendorContactNameInput
+      class="form-control"
+      formControlName="vendorContactName"
+      (keydown.enter)="focusNext(vendorContactEmailInput)" />
+  </div>
+
+  <!-- Vendor Contact Email -->
+  <div class="mb-3">
+    <label class="form-label">Vendor Contact Email</label>
+    <input
+      #vendorContactEmailInput
+      type="email"
+      class="form-control"
+      formControlName="vendorContactEmail"
+      (keydown.enter)="focusNext(vendorContactPhoneInput)" />
+  </div>
+
+  <!-- Vendor Contact Phone -->
+  <div class="mb-3">
+    <label class="form-label">Vendor Contact Phone</label>
+    <input
+      #vendorContactPhoneInput
+      class="form-control"
+      formControlName="vendorContactPhone"
+      (keydown.enter)="focusNext(implementationPartnerInput)" />
+  </div>
+
+  <!-- Implementation Partner -->
+  <div class="mb-3">
+    <label class="form-label">Implementation Partner</label>
+    <input
+      #implementationPartnerInput
+      class="form-control"
+      formControlName="implementationPartner"
+      (keydown.enter)="focusNext(jobTitleInput)" />
+  </div>
+
+  <!-- Job Title -->
+  <div class="mb-3">
+    <label class="form-label">Job Title</label>
+    <input
+      #jobTitleInput
+      class="form-control"
+      formControlName="jobTitle"
+      (keydown.enter)="focusNext(jobDescriptionInput)" />
+  </div>
+
+  <!-- Job Description -->
+  <div class="mb-3">
+    <label class="form-label">Job Description</label>
+    <textarea
+      #jobDescriptionInput
+      rows="3"
+      class="form-control"
+      formControlName="jobDescription"
+      (keydown.enter)="focusNext(requiredSkillsInput)">
+    </textarea>
+  </div>
+
+  <!-- Required Skills -->
+  <div class="mb-3">
+    <label class="form-label">Required Skills</label>
+    <textarea
+      #requiredSkillsInput
+      rows="2"
+      class="form-control"
+      formControlName="requiredSkills"
+      (keydown.enter)="focusNext(rateInput)">
+    </textarea>
+  </div>
 
   <!-- Rate -->
   <div class="mb-3">
@@ -95,7 +171,6 @@
       (keydown.enter)="focusNext(locationInput)" />
   </div>
 
-
   <!-- Location -->
   <div class="mb-3">
     <label class="form-label">Location</label>
@@ -103,12 +178,37 @@
       #locationInput
       class="form-control"
       formControlName="location"
-      (keydown.enter)="submit()" />
+      (keydown.enter)="focusNext(candidateLocationInput)" />
   </div>
 
+  <!-- Candidate Location -->
+  <div class="mb-3">
+    <label class="form-label">Candidate Location</label>
+    <input
+      #candidateLocationInput
+      class="form-control"
+      formControlName="candidateLocation"
+      (keydown.enter)="focusNext(employmentTypeInput)" />
+  </div>
+
+  <!-- Employment Type -->
+  <div class="mb-3">
+    <label class="form-label">Employment Type</label>
+    <select
+      #employmentTypeInput
+      class="form-select"
+      formControlName="employmentType"
+      (keydown.enter)="submit()">
+        <option>Contract</option>
+        <option>Full-Time</option>
+        <option>Contract-to-Hire</option>
+        <option>Part-Time</option>
+    </select>
+  </div>
 
 </form>
 
+<!-- Submit Button -->
 <div class="d-flex justify-content-end mt-3">
   <button
     class="btn btn-primary"

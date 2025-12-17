@@ -9,24 +9,47 @@
     + New Submission
   </button>
 
+  <!-- Loading State -->
+  <div *ngIf="loading" class="alert alert-info">
+    Loading submissions...
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="alert alert-danger">      
+    {{ error }}
+  </div>
+
   <!-- Table -->
-  <table class="table table-bordered table-hover">
+  <table class="table table-striped border secondary table-hover align-middle" *ngIf="!loading && !error">
     <thead class="table-light">
       <tr>
         <th>ID</th>
-        <th>Submission Name</th>
+        <th>Candidate</th>
+        <th>Recruiter</th>
+        <th>Client</th>
+        <th>Job Title</th>
         <th>Status</th>
-        <th>Created On</th>
+        <th>Submitted</th>
+        <th>Rate</th>
+        <th>Location</th>
         <th style="width: 100px">Actions</th>
       </tr>
     </thead>
 
     <tbody>
+      <tr *ngIf="submissions.length === 0">
+        <td colspan="10" class="text-center py-3 text-muted">No submissions found</td>
+      </tr>
       <tr *ngFor="let item of submissions">
-        <td>{{ item.id }}</td>
-        <td>{{ item.name }}</td>
-        <td>{{ item.status }}</td>
-        <td>{{ item.createdOn | date }}</td>
+        <td>{{ item.submissionId }}</td>
+        <td>{{ item.candidateName || '-' }}</td>
+        <td>{{ item.recruiterName || '-' }}</td>
+        <td>{{ item.clientName || '-' }}</td>
+        <td>{{ item.jobTitle || '-' }}</td>
+        <td>{{ item.currentStatus || '-' }}</td>
+        <td>{{ ( item.submissionDate) | date }}</td>
+        <td>{{ item.rate != null ? (item.rate | number:'1.2-2') : '-' }}</td>
+        <td>{{ item.location || '-' }}</td>
 
         <td>
           <button class="btn btn-sm btn-outline-secondary">Edit</button>
@@ -53,7 +76,7 @@
       </div>
 
       <div class="modal-body">
-        <app-create-submission></app-create-submission>
+        <app-create-submission (submissionCreated)="closeCreateModal()"></app-create-submission>
       </div>
 
     </div>

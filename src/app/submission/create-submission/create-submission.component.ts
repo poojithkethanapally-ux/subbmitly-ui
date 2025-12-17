@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SubmissionService } from '../../services/submissions.service';
 import { User } from '../../users/models/user.model';
 import { Observable, debounceTime, distinctUntilChanged, map } from 'rxjs';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { CreateSubmissionRequest } from '../models/CreateSubmission';
+import bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-create-submission',
@@ -14,6 +16,7 @@ import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./create-submission.component.css']
 })
 export class CreateSubmissionComponent implements OnInit {
+  @Output() submissionCreated = new EventEmitter<void>();
 
   form!: FormGroup;
   users: User[] = [];
@@ -21,6 +24,7 @@ export class CreateSubmissionComponent implements OnInit {
   recruiters: User[] = [];
   candidateInvalid = false;
   recruiterInvalid = false;
+  loading: boolean | undefined;
 
 
   constructor(
@@ -37,7 +41,7 @@ export class CreateSubmissionComponent implements OnInit {
     this.form = this.fb.group({
       candidateId: ['', Validators.required],
       recruiterId: ['', Validators.required],
-      submissionName: ['', Validators.required],
+      // submissionName: ['', Validators.required],
       status: ['Submitted', Validators.required],
       client: [''],
       rate: [''],
@@ -58,13 +62,62 @@ export class CreateSubmissionComponent implements OnInit {
   }
 
   submit() {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
-    console.log('Submitting:', this.form.value);
+  if (this.candidateInvalid || this.recruiterInvalid || this.form.invalid) {
+    this.form.markAllAsTouched();
+    return;
   }
+
+  const request: CreateSubmissionRequest = {
+      candidateId: this.form.value.candidateId,
+       recruiterId: this.form.value.recruiterId,
+
+      status: this.form.value.status,
+      submissionDate: this.form.value.submissionDate,  // yyyy-MM-dd
+
+      clientName: this.form.value.client,
+
+      vendorName: this.form.value.vendorName,
+      vendorContactName: this.form.value.vendorContactName,
+      vendorContactEmail: this.form.value.vendorContactEmail,
+      vendorContactPhone: this.form.value.vendorContactPhone,
+
+      implementationPartner: this.form.value.implementationPartner,
+
+      jobTitle: this.form.value.jobTitle,
+      jobDescription: this.form.value.jobDescription,
+      requiredSkills: this.form.value.requiredSkills,
+
+      rate: this.form.value.rate,
+      location: this.form.value.location,
+      candidateLocation: this.form.value.candidateLocation,
+
+      employmentType: this.form.value.employmentType
+    };
+
+    console.log("Final request:", request);
+
+    this.submissionService.createSubmission(request).subscribe({
+      next: () => {
+        this.loading = false;
+        this.submissionService.refreshSubmissions();
+        this.form.reset();
+        this.submissionCreated.emit();
+      },
+      error: (err) => {
+        console.error("Submission failed:", err);
+      }
+    });
+  }
+
+  //  cancel() {
+  //   this.closeModal();
+  // }
+
+  // closeModal() {
+  // const modalEl = document.getElementById('createSubmissionModal');
+  // const modal = bootstrap.Modal.getInstance(modalEl);
+  // modal.hide();
+
 
   // --------------------------
   // TYPEAHEAD FOR CANDIDATES
